@@ -1,14 +1,19 @@
 package com.transport.controller;
 
-import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.transport.payloads.StandardResponse;
+import com.transport.payloads.UserRequestRegister;
+import com.transport.services.UserService;
 
 
 /**
@@ -39,19 +44,37 @@ public class UserController {
 	 */
 	public static final Logger logger = LoggerFactory.getLogger(UserController.class);
 	
-	
+	// ------------------------------------------
 	// --------- Dependencies--------------------
-//	@Autowired
-//	UserService userService;
+	@Autowired
+	UserService userService;
 	
 	
+	// ------------------------------------------
 	// --------- User Controller Mappings -------
-
-	// ReTrive all users
-	@RequestMapping(value = "/user/", method=RequestMethod.GET)
-	public ResponseEntity<List<User>> listAllUser() {
-		//get all users List.
+	@PostMapping("/user/register")
+	public ResponseEntity<StandardResponse> register(@RequestBody UserRequestRegister userRequestRegister){
+		
+		//Save to database
+		boolean isSaved = userService.save(userRequestRegister);
+		ResponseEntity<StandardResponse> response;
+		
+		//set the response object
+		if(isSaved) {
+			StandardResponse standardResponse = new StandardResponse("otp was send to email and phone. please enter otp.");
+			response = ResponseEntity.ok(standardResponse);
+		}
+		else {
+			StandardResponse standardResponse = new StandardResponse("failed to save user");
+			response = ResponseEntity.ok(standardResponse);
+		}
+		
+		return response;
 	}
+	
+	
+	
+	
 	
 	
 	
