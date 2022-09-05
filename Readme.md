@@ -2,8 +2,8 @@
 #### Register user.
 **Features**
 - [x]  It will save the useremail and phone number to postgresql database.
-- [ ]  generate random otp and save to storage for limited time.
-- [ ]  send otp to email using smtp.google.com server.
+- [x]  generate random otp and save to storage for limited time.
+- [x]  send otp to email using smtp.google.com server.
 - [ ]  send otp to mobile using twillo apis.
 - [ ] do more research into mobile send otp for optimization of cost.
 -  

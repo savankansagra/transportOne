@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.transport.payloads.StandardResponse;
 import com.transport.payloads.UserRequestRegister;
+import com.transport.services.OtpService;
 import com.transport.services.UserService;
 
 
@@ -47,7 +48,11 @@ public class UserController {
 	// ------------------------------------------
 	// --------- Dependencies--------------------
 	@Autowired
-	UserService userService;
+	private UserService userService;
+	
+	@Autowired
+	private OtpService otpService;
+	
 	
 	
 	// ------------------------------------------
@@ -57,9 +62,13 @@ public class UserController {
 		
 		//Save to database
 		boolean isSaved = userService.save(userRequestRegister);
-		ResponseEntity<StandardResponse> response;
+		
+		//Generate Otp and store into local cache.
+		otpService.generateAndSendtoEmailAndSendtoMobile(userRequestRegister);
+		
 		
 		//set the response object
+		ResponseEntity<StandardResponse> response;
 		if(isSaved) {
 			StandardResponse standardResponse = new StandardResponse("otp was send to email and phone. please enter otp.");
 			response = ResponseEntity.ok(standardResponse);
