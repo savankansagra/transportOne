@@ -57,7 +57,7 @@ public class UserController {
 	
 	// ------------------------------------------
 	// --------- User Controller Mappings -------
-	@PostMapping("/user/register")
+	@PostMapping("/register")
 	public ResponseEntity<StandardResponse> register(@RequestBody UserRequestRegister userRequestRegister){
 		
 		//Save to database

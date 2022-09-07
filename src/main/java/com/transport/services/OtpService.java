@@ -22,6 +22,8 @@ public class OtpService {
 	@Autowired
 	private EmailService emailService; 
 	
+	@Autowired
+	private SmsSenderService smsSenderService;
 	
 	public OtpService() {
 		super();
@@ -52,11 +54,18 @@ public class OtpService {
 		String to = userRequestRegister.getUserEmail();
 		String subject = "Verification OTP code";
 		String message = "Verification OTP code is "+otp;
-		emailService.sendOtpMessage(to, subject, message);
+		try {
+			emailService.sendOtpMessage(to, subject, message);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
 		
 		//send to mobile
-		
-		
+		try {
+			smsSenderService.sendSmsByService(userRequestRegister.getTelephoneNumber(), otp);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 }
