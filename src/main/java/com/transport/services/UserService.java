@@ -28,4 +28,8 @@ public class UserService {
 		
 		return isSaved;
 	}
+	
+	public String getTelephoneNumberFromEmail(String email) {
+		return userRepository.getTelephoneNumberFromEmail(email);
+	}
 }

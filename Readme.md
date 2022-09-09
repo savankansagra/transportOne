@@ -54,7 +54,7 @@
 	
 	-----------------
 	request type: POST
-	path: api/authentication/useremail
+	path: api/authentication/userTelephoneNumber
 	request payload: {
 		"telephoneNumber": "+919316370069",
 		"otp": "636578" // 6 digit otp message

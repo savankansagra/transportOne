@@ -1,4 +1,4 @@
-package com.transport.configuration;
+package com.transport.configuration.twilio;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;

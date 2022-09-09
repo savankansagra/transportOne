@@ -11,12 +11,13 @@ import org.springframework.stereotype.Service;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
+import com.transport.payloads.UserLoginEmail;
 import com.transport.payloads.UserRequestRegister;
 
 @Service
 public class OtpService {
 
-	private static final Integer EXPIRE_MINS = 1;
+	private static final Integer EXPIRE_MINS = 10;
 	private LoadingCache<String, Integer> otpCache;
 
 	@Autowired
@@ -38,7 +39,7 @@ public class OtpService {
 		
 	}
 	
-	private int generateOtp(String key) {
+	public int generateOtp(String key) {
 		Random random = new Random();
 		int otp = 100000 + random.nextInt(900000);
 		otpCache.put(key, otp);
@@ -67,5 +68,29 @@ public class OtpService {
 			e.printStackTrace();
 		}
 	}
+	
+	public void clearOtp(String key) {
+		otpCache.invalidate(key);
+	}
 
+	
+	public boolean isOtpValid(String userTelephoneNumber, Integer userOtp) {
+		boolean successFlag = false;
+			
+		Integer systemOtp;
+		try {
+			systemOtp = otpCache.get(userTelephoneNumber);
+		} catch (Exception e) {
+			systemOtp = 0;
+		}
+			
+		if(userOtp.intValue() == systemOtp.intValue()) {
+			successFlag = true;
+			this.clearOtp(userTelephoneNumber);
+		}
+			
+		return successFlag;
+	}	
+	
+	
 }

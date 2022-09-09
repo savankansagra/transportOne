@@ -14,7 +14,7 @@ public class TwilioSmsSender {
 	private static final Logger logger = LoggerFactory.getLogger(TwilioSmsSender.class);
 	
 	public void sendsms(String telephoneNumber, Integer otp) {
-		PhoneNumber to = new PhoneNumber("+919316370069");
+		PhoneNumber to = new PhoneNumber("+919408234854");
 		PhoneNumber from = new PhoneNumber("+18559585109");
 		String otpMessage = "Dear Customer, Your OTP is ##" + otp + "##";
 		MessageCreator creator = Message.creator(to, from, otpMessage);

@@ -1,4 +1,4 @@
-package com.transport.configuration;
+package com.transport.configuration.twilio;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
