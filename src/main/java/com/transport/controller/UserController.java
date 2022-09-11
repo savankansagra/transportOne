@@ -3,23 +3,32 @@ package com.transport.controller;
 
 import java.util.HashMap;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.transport.payloads.LoginEmail;
 import com.transport.payloads.LoginTelephoneNumber;
 import com.transport.payloads.StandardResponse;
+import com.transport.payloads.SuccessToken;
 import com.transport.payloads.UserLoginEmail;
+import com.transport.payloads.UserLoginTelephoneNumber;
 import com.transport.payloads.UserRequestRegister;
+import com.transport.security.JwtTokenProvider;
 import com.transport.services.OtpService;
 import com.transport.services.UserService;
-import com.transport.util.JwtUtil;
 
 
 /**
@@ -59,14 +68,15 @@ public class UserController {
 	@Autowired
 	private OtpService otpService;
 	
-	@Autowired
-	private JwtUtil jwtUtil;
-	
 	
 	// ------------------------------------------
-	// --------- Login Controller Mappings -------
-	@PostMapping("/register")
+	// --------- New User Registration ----------
+	// SignUp
+	@PostMapping("/signup")
 	public ResponseEntity<StandardResponse> register(@RequestBody UserRequestRegister userRequestRegister){
+		
+		// TODO Implement the validation of mobile number and email address.
+		// 		Then send the OTP.
 		
 		//Save to database
 		boolean isSaved = userService.save(userRequestRegister);
@@ -81,7 +91,7 @@ public class UserController {
 			response = ResponseEntity.ok(standardResponse);
 		}
 		else {
-			StandardResponse standardResponse = new StandardResponse("failed to save user");
+			StandardResponse standardResponse = new StandardResponse("you are existing user. otp send to mobile and email. please enter it. Or failed to save user.");
 			response = ResponseEntity.ok(standardResponse);
 		}
 		
@@ -89,8 +99,25 @@ public class UserController {
 	}
 	
 	
+	//---------- Existing User Login  ------------
+	// Using email Address to Login
+	@PostMapping("/signin/useremail")
+	public ResponseEntity<StandardResponse> loginWithEmail(@RequestBody LoginEmail loginEmail){
+		String message = userService.validateAndSendOtpToEmail(loginEmail);
+		return ResponseEntity.ok(new StandardResponse(message));
+	}
+	
+	@PostMapping("signin/usertelephonenumber")
+	public ResponseEntity<StandardResponse> loginWithTelephoneNumber(@RequestBody LoginTelephoneNumber loginTelephoneNumber ){
+		String message = userService.validateAndSendOtpToTelephoneNumber(loginTelephoneNumber);
+		return ResponseEntity.ok(new StandardResponse(message));
+	}
+	
+	
+	// ---------- Sign In Verification -------------
+	// SignIn verification with Email
 	@PostMapping("/authentication/useremail")
-	public ResponseEntity<StandardResponse> loginWithEmail(@RequestBody UserLoginEmail userLoginEmail){
+	public ResponseEntity AuthenticateWithEmail(@RequestBody UserLoginEmail userLoginEmail){
 		String userTelephoneNumber = "";
 		boolean isValidOtp = false;
 		String returnMessage = "";
@@ -112,18 +139,20 @@ public class UserController {
 		
 		//Generate the JWT token.
 		if(isValidOtp == true) {
-			returnMessage = jwtUtil.createTokenWithTelephoneNumberAndRole(new HashMap<>(), userTelephoneNumber, "USER");
+			returnMessage = userService.createToken(userTelephoneNumber);
+			return ResponseEntity.ok(new SuccessToken(returnMessage));
+			
 		} else if (returnMessage == "") {
 			returnMessage = "OTP is expired or it is wrong.";
 		}
 		
-		return ResponseEntity.ok(new StandardResponse(returnMessage));
+		return ResponseEntity.badRequest().body(returnMessage);
 		
 	}
 	
-	
-	@PostMapping("/authentication/userTelephoneNumber")
-	public ResponseEntity<StandardResponse> loginWithTelephoneNumber(@RequestBody LoginTelephoneNumber loginTelephoneNumber){
+	// SignIn with telephone number
+	@PostMapping("/authentication/usertelephonenumber")
+	public ResponseEntity AuthenticateWithTelephoneNumber(@RequestBody UserLoginTelephoneNumber loginTelephoneNumber){
 		String userTelephoneNumber = "";
 		boolean isValidOtp = false;
 		String returnMessage = "";
@@ -144,18 +173,36 @@ public class UserController {
 		}
 		
 		if(isValidOtp == true) {
-			returnMessage = jwtUtil.createTokenWithTelephoneNumberAndRole(new HashMap<>(), userTelephoneNumber, "USER");
+//			returnMessage = jwtTokenProvider.createTokenWithTelephoneNumberAndRole(new HashMap<>(), userTelephoneNumber, "USER");
+			returnMessage = userService.createToken(userTelephoneNumber);
+			return ResponseEntity.ok(new SuccessToken(returnMessage));
+			
 		} else if (returnMessage == "") {
 			returnMessage = "OTP is expired or it is wrong.";
 		}
 		
-		return ResponseEntity.ok(new StandardResponse(returnMessage));
-		
+		return ResponseEntity.badRequest().body(returnMessage);
 	}
 	
-	
-	
+	// ********* User CRUD Operation **********
+	@DeleteMapping("/deleteuser/{telephonenumber}")
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	public String delete(@PathVariable String telephoneNumber) {
+		userService.delete(telephoneNumber);
+		return "deleted Sucessfull :"+telephoneNumber;
+	}
 
+	
+	// TODO - Search User.
+	
+	
+	// ************* Refresh the token ***********
+	@GetMapping("/refresh")
+	@PreAuthorize("hasRole('ROLE_ADMIN') or ('ROLE_CLIENT')")
+	public String refresh(HttpServletRequest req) {
+		return userService.refresh(req.getRemoteUser());
+	}
+	
 	
 	
 	

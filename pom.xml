@@ -43,6 +43,20 @@
 			<scope>runtime</scope>
 		</dependency>
 		
+		<!-- =========   Swagger Configuration  =============== -->
+		<!-- Automated JSON API documentation for API's built with Spring -->
+		<dependency>
+		    <groupId>io.springfox</groupId>
+    		<artifactId>springfox-swagger2</artifactId>
+    		<version>3.0.0</version>
+		</dependency>
+		<dependency>
+    		<groupId>io.springfox</groupId>
+    		<artifactId>springfox-swagger-ui</artifactId>
+    		<version>3.0.0</version>
+		</dependency>
+		
+		
 		<!-- =========   Store and send SMS  =============== -->
 		<!-- Cache for OTP  -->
 		<dependency>

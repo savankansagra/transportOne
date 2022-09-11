@@ -89,4 +89,10 @@
 2. If Authentication is successfull then add the role "USER" or "OWNER" into table 
     -  we need to create the "userrole" table with mapping of user mobile number and role column.
     -  for admin role we need to make manual entry for "ADMIN" role in "userrole" table. we will assign all api access to "ADMIN" role. 
+	-
 	
+	
+	
+## Thanks to References ##
+** Spring Security with Jwt token Authentication **
+<link>https://github.com/murraco/spring-boot-jwt</link>

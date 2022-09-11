@@ -47,6 +47,37 @@ public class OtpService {
 	}
 	
 	
+	public void generateAndSendtoEmail(String emailAddress) {
+		// generate otp.
+		int otp = this.generateOtp(emailAddress);
+		
+		//send to email
+		String to = emailAddress;
+		String subject = "Verification OTP code";
+		String message = "Verification OTP code is "+otp;
+		try {
+			emailService.sendOtpMessage(to, subject, message);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
+	public void generateAndSendtoTelephoneNumber(String telephoneNumber) {
+		//generate otp
+		int otp = this.generateOtp(telephoneNumber);
+				
+		//send to mobile
+		try {
+			smsSenderService.sendSmsByService(telephoneNumber, otp);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+	}
+	
+	
+	
 	public void generateAndSendtoEmailAndSendtoMobile(UserRequestRegister userRequestRegister) {
 		//generate otp
 		int otp = this.generateOtp(userRequestRegister.getTelephoneNumber());

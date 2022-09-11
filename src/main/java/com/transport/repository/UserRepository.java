@@ -14,4 +14,11 @@ public interface UserRepository extends CrudRepository<User, Long> {
 	@Query(nativeQuery = true, value = "select tu.telephonenumber from testuser tu where useremail = :email")
 	String getTelephoneNumberFromEmail(@Param("email") String email);
 	
+	@Query(nativeQuery = true, value = "select * from testuser tu where useremail = :email")
+	User findUserByEmailAddress(@Param("email") String email);
+
+	@Query(nativeQuery = true, value = "delete from testuser tu where telephonenumber = :telephoneNumber")
+	void deleteByTelephoneNumber(@Param("telephoneNumber")  String telephoneNumber);
+	
+	
 }
