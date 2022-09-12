@@ -2,12 +2,12 @@ package com.transport.payloads;
 
 public class UserLoginTelephoneNumber {
 	private String telephoneNumber;
-	private Integer otp;
+	private Integer Otp;
 	
-	public UserLoginTelephoneNumber(String telephoneNumber, Integer otp) {
+	public UserLoginTelephoneNumber(String telephoneNumber, Integer Otp) {
 		super();
 		this.telephoneNumber = telephoneNumber;
-		this.otp = otp;
+		this.Otp = Otp;
 	}
 	
 	public String getTelephoneNumber() {
@@ -17,15 +17,15 @@ public class UserLoginTelephoneNumber {
 		this.telephoneNumber = telephoneNumber;
 	}
 	public Integer getOtp() {
-		return otp;
+		return Otp;
 	}
-	public void setOtp(Integer otp) {
-		this.otp = otp;
+	public void setOtp(Integer Otp) {
+		this.Otp = Otp;
 	}
 	
 	@Override
 	public String toString() {
-		return "UserLoginTelephoneNumber [telephoneNumber=" + telephoneNumber + ", otp=" + otp + "]";
+		return "UserLoginTelephoneNumber [telephoneNumber=" + telephoneNumber + ", otp=" + Otp + "]";
 	}
 	
 	

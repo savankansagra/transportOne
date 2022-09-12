@@ -38,9 +38,11 @@ public class SecurityConfigurations extends WebSecurityConfigurerAdapter {
 		
 		// Entry Points
 		http.authorizeRequests()
-			.antMatchers("/api/register").permitAll()
+			.antMatchers("/api/signup").permitAll()
+			.antMatchers("/api/signin/useremail").permitAll()
 			.antMatchers("/api/authentication/useremail").permitAll()
-			.antMatchers("/api/authentication/userTelephoneNumber").permitAll()
+			.antMatchers("/api/signin/usertelephonenumber").permitAll()
+			.antMatchers("/api/authentication/usertelephonenumber").permitAll()
 			.anyRequest().authenticated();
 		
 		// If a user try to access a resources without having enough permission

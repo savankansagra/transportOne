@@ -3,6 +3,15 @@ package com.transport.payloads;
 public class LoginEmail {
 	String emailAddress;
 
+	public LoginEmail() {
+		super();
+	}
+	
+	public LoginEmail(String emailAddress) {
+		super();
+		this.emailAddress = emailAddress;
+	}
+
 	public String getEmailAddress() {
 		return emailAddress;
 	}
@@ -11,14 +20,6 @@ public class LoginEmail {
 		this.emailAddress = emailAddress;
 	}
 
-	public LoginEmail(String emailAddress) {
-		super();
-		this.emailAddress = emailAddress;
-	}
-
-	public LoginEmail() {
-		super();
-	}
 
 	@Override
 	public String toString() {

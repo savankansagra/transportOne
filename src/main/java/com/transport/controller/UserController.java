@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.transport.entities.User;
 import com.transport.payloads.LoginEmail;
 import com.transport.payloads.LoginTelephoneNumber;
 import com.transport.payloads.StandardResponse;
@@ -107,7 +108,7 @@ public class UserController {
 		return ResponseEntity.ok(new StandardResponse(message));
 	}
 	
-	@PostMapping("signin/usertelephonenumber")
+	@PostMapping("/signin/usertelephonenumber")
 	public ResponseEntity<StandardResponse> loginWithTelephoneNumber(@RequestBody LoginTelephoneNumber loginTelephoneNumber ){
 		String message = userService.validateAndSendOtpToTelephoneNumber(loginTelephoneNumber);
 		return ResponseEntity.ok(new StandardResponse(message));
@@ -118,20 +119,19 @@ public class UserController {
 	// SignIn verification with Email
 	@PostMapping("/authentication/useremail")
 	public ResponseEntity AuthenticateWithEmail(@RequestBody UserLoginEmail userLoginEmail){
-		String userTelephoneNumber = "";
 		boolean isValidOtp = false;
 		String returnMessage = "";
 		
 		if(null != userLoginEmail) {
-			// Get the mobile number related to email
-			if(null != userLoginEmail.getUserEmail()) {
-				userTelephoneNumber = userService.getTelephoneNumberFromEmail(userLoginEmail.getUserEmail());
-			} else {
-				returnMessage = "email Address is not found";
-			}
+//			// Get the mobile number related to email
+//			if(null != userLoginEmail.getUserEmail()) {
+//				userTelephoneNumber = userService.getTelephoneNumberFromEmail(userLoginEmail.getUserEmail());
+//			} else {
+//				returnMessage = "email Address is not found";
+//			}
 			//check for user OTP validation
-			if(null != userLoginEmail.getOtp()) {
-				isValidOtp = otpService.isOtpValid(userTelephoneNumber, userLoginEmail.getOtp());
+			if(null != userLoginEmail.getUserEmail() && null != userLoginEmail.getOtp()) {
+				isValidOtp = otpService.isOtpValid(userLoginEmail.getUserEmail(), userLoginEmail.getOtp());
 			} else {
 				returnMessage = "OTP is not found.";
 			}
@@ -139,7 +139,7 @@ public class UserController {
 		
 		//Generate the JWT token.
 		if(isValidOtp == true) {
-			returnMessage = userService.createToken(userTelephoneNumber);
+			returnMessage = userService.createToken(userService.getTelephoneNumberFromEmail(userLoginEmail.getUserEmail()));
 			return ResponseEntity.ok(new SuccessToken(returnMessage));
 			
 		} else if (returnMessage == "") {
@@ -198,14 +198,18 @@ public class UserController {
 	
 	// ************* Refresh the token ***********
 	@GetMapping("/refresh")
-	@PreAuthorize("hasRole('ROLE_ADMIN') or ('ROLE_CLIENT')")
+	@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_CLIENT')")
 	public String refresh(HttpServletRequest req) {
 		return userService.refresh(req.getRemoteUser());
 	}
 	
 	
-	
-	
+	// For testing of token usage.
+	@GetMapping("/me")
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	public User whoami(HttpServletRequest req) {
+		return userService.whoami(req);
+	}
 	
 	
 	

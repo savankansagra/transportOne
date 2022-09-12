@@ -77,10 +77,10 @@ public class JwtTokenProvider {
 	//Authenticate the User Request.
 	public Authentication getAuthentication(String token) {
 		UserDetails userDetails = myUserDetails.loadUserByUsername(getTelephoneNumberFromToken(token));
-		return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
+		return new UsernamePasswordAuthenticationToken(userDetails.getUsername(), "", userDetails.getAuthorities());
 	}
 	
-	private String getTelephoneNumberFromToken(String token) {
+	public String getTelephoneNumberFromToken(String token) {
 		return Jwts.parser().setSigningKey(SECREAT_KEY).parseClaimsJws(token).getBody().getSubject();
 	}
 

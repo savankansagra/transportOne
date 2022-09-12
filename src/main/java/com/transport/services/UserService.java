@@ -1,11 +1,16 @@
 package com.transport.services;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.transport.entities.User;
+import com.transport.entities.UserRoles;
 import com.transport.payloads.LoginEmail;
 import com.transport.payloads.LoginTelephoneNumber;
 import com.transport.payloads.UserRequestRegister;
@@ -38,6 +43,7 @@ public class UserService {
 			User user = new User();
 			user.setTelephoneNumber(userRequestRegister.getTelephoneNumber());
 			user.setUserEmail(userRequestRegister.getUserEmail());
+			user.setAppUserRoles(userRequestRegister.getUserRoles());
 			userRepository.save(user);
 			isSaved = true;
 		}
@@ -147,6 +153,14 @@ public class UserService {
 
 	public String refresh(String remoteUser) {
 		return jwtTokenProvider.createTokenWithTelephoneNumberAndRole(remoteUser, userRepository.findUserByTelephoneNumber(remoteUser).getAppUserRoles());
+	}
+
+	public User whoami(HttpServletRequest req) {
+		String token = jwtTokenProvider.resolveToken(req);
+		String userTelephoneNumber = jwtTokenProvider.getTelephoneNumberFromToken(token);
+		User user = userRepository.findUserByTelephoneNumber(userTelephoneNumber);
+		return user;
+		
 	}
 	
 }

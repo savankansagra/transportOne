@@ -25,6 +25,7 @@ public class User {
 	@Column(name = "telephonenumber")
 	String telephoneNumber;
 
+	@Column
 	@ElementCollection(fetch = FetchType.EAGER)
 	List<UserRoles> appUserRoles;
 	

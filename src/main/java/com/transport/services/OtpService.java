@@ -43,6 +43,7 @@ public class OtpService {
 		Random random = new Random();
 		int otp = 100000 + random.nextInt(900000);
 		otpCache.put(key, otp);
+		System.out.println("OTP is :"+otp);
 		return otp;
 	}
 	

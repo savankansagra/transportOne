@@ -11,21 +11,8 @@ import org.springframework.boot.test.web.server.LocalServerPort;
 @SpringBootTest
 class TransportApiApplicationTests {
 
-	@LocalServerPort
-	private int port;
-
-	@Autowired
-	private TestRestTemplate restTemplate;
-
-	
 	@Test
 	void contextLoads() {
 	}
-	
-//	@Test
-//	void RegisterUserTest() {
-//		assertThat(this.restTemplate.getForObject("http://localhost:"+port+"/"+"api/register", String.class))
-//	}
-	
 
 }

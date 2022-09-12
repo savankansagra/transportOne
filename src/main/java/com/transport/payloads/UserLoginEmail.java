@@ -4,10 +4,10 @@ public class UserLoginEmail {
 	private String userEmail;
 	private Integer Otp;
 	
-	public UserLoginEmail(String userEmail, Integer otp) {
+	public UserLoginEmail(String userEmail, Integer Otp) {
 		super();
 		this.userEmail = userEmail;
-		Otp = otp;
+		this.Otp = Otp;
 	}
 
 	public String getUserEmail() {
