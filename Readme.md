@@ -29,9 +29,9 @@
 ## ROLES
 #### Set the Roles and security
 **Features**
-- [ ] Authentication of OTP.
-- [ ] create two Roles as "USER" and "OWNER" and assign them access.
-- [ ] create authentication of the user roles and roles based access of APIs.
+- [x] Authentication of OTP.
+- [x] create two Roles as "USER" and "OWNER" and assign them access.
+- [ ] Not Working, need to do more research. - create authentication of the user roles and roles based access of APIs.
 -  
 
 **Request type**
@@ -86,10 +86,20 @@
 	
 **Logic :**
 1. enter otp code with the email address or phone number.
-2. If Authentication is successfull then add the role "USER" or "OWNER" into table 
-    -  we need to create the "userrole" table with mapping of user mobile number and role column.
-    -  for admin role we need to make manual entry for "ADMIN" role in "userrole" table. we will assign all api access to "ADMIN" role. 
-	-
+2. If Authentication with Otp is successfull then create JWT token with all neccesary user claims and send to client. 
+    -  It also assign the Role "USER" or "OWNER" with user_role table.
+    
+
+## Upload Truck Details - "OWNER" role side.
+#### upload truck details with valid documents. 
+**Features**
+- [ ] create POST request of truck details. with OWNER role.
+- [ ] creating flag of verification pending.
+- [ ] verify document by admin user. and make flags true.
+
+
+	
+
 	
 	
 	
