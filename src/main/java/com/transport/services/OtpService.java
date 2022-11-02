@@ -93,12 +93,15 @@ public class OtpService {
 			// TODO: handle exception
 		}
 		
-		//send to mobile
+		// TODO : check authentication of sending OTP to mobile.
+		/*
+		//send to mobile		
 		try {
 			smsSenderService.sendSmsByService(userRequestRegister.getTelephoneNumber(), otp);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		*/
 	}
 	
 	public void clearOtp(String key) {

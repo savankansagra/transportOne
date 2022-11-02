@@ -24,6 +24,7 @@ import com.transport.payloads.LoginEmail;
 import com.transport.payloads.LoginTelephoneNumber;
 import com.transport.payloads.StandardResponse;
 import com.transport.payloads.SuccessToken;
+import com.transport.payloads.UserLogin;
 import com.transport.payloads.UserLoginEmail;
 import com.transport.payloads.UserLoginTelephoneNumber;
 import com.transport.payloads.UserRequestRegister;
@@ -36,17 +37,11 @@ import com.transport.services.UserService;
  * Detailed Explanation :
 
  @RestController : First of all, we are using Spring 4′s new @RestController annotation. This annotation eliminates the need of annotating each method with @ResponseBody. Under the hood, @RestController is itself annotated with @ResponseBody, and can be considered as combination of @Controller and @ResponseBody.
-
  @RequestBody : If a method parameter is annotated with @RequestBody, Spring will bind the incoming HTTP request body(for the URL mentioned in @RequestMapping for that method) to that parameter. While doing that, Spring will [behind the scenes] use HTTP Message converters to convert the HTTP request body into domain object [deserialize request body to domain object], based on ACCEPT or Content-Type header present in request.
-
  @ResponseBody : If a method is annotated with @ResponseBody, Spring will bind the return value to outgoing HTTP response body. While doing that, Spring will [behind the scenes] use HTTP Message converters to convert the return value to HTTP response body [serialize the object to response body], based on Content-Type present in request HTTP header. As already mentioned, in Spring 4, you may stop using this annotation.
-
  ResponseEntity is a real deal. It represents the entire HTTP response. Good thing about it is that you can control anything that goes into it. You can specify status code, headers, and body. It comes with several constructors to carry the information you want to sent in HTTP Response.
-
  @PathVariable This annotation indicates that a method parameter should be bound to a URI template variable [the one in '{}'].
-
  Basically, @RestController , @RequestBody, ResponseEntity & @PathVariable are all you need to know to implement a REST API in Spring. Additionally, spring provides several support classes to help you implement something customized.
-
  MediaType : Although we didn’t, with @RequestMapping annotation, you can additionally, specify the MediaType to be produced or consumed (using produces or consumes attributes) by that particular controller method, to further narrow down the mapping.
 
 */
@@ -88,11 +83,11 @@ public class UserController {
 		//set the response object
 		ResponseEntity<StandardResponse> response;
 		if(isSaved) {
-			StandardResponse standardResponse = new StandardResponse("otp was send to email and phone. please enter otp.");
+			StandardResponse standardResponse = new StandardResponse("otp was sent to email and phone. Please enter otp.");
 			response = ResponseEntity.ok(standardResponse);
 		}
 		else {
-			StandardResponse standardResponse = new StandardResponse("you are existing user. otp send to mobile and email. please enter it. Or failed to save user.");
+			StandardResponse standardResponse = new StandardResponse("You are existing user. Otp send to mobile and email. please enter it. Or failed to save user.");
 			response = ResponseEntity.ok(standardResponse);
 		}
 		
@@ -116,7 +111,7 @@ public class UserController {
 	
 	
 	// ---------- Sign In Verification -------------
-	// SignIn verification with Email
+	// SignIn verification with Email 
 	@PostMapping("/authentication/useremail")
 	public ResponseEntity AuthenticateWithEmail(@RequestBody UserLoginEmail userLoginEmail){
 		boolean isValidOtp = false;
@@ -184,6 +179,58 @@ public class UserController {
 		return ResponseEntity.badRequest().body(returnMessage);
 	}
 	
+	
+	// ---------- Sign In Verification - All in one. -------------
+	// SignIn verification with Email 
+	@PostMapping("/authentication")
+	public ResponseEntity AuthenticateUser(@RequestBody UserLogin userLogin){
+		boolean isValidOtp = false;
+		boolean isTelephoneNumberMatch = true;
+		String returnMessage = "";
+		String userTelephoneNumber = "";	
+			
+		if(null != userLogin) {
+			// Get the mobile number related to email
+			if(null != userLogin.getUserEmail() && null == userLogin.getTelephoneNumber()) {
+				userTelephoneNumber = userService.getTelephoneNumberFromEmail(userLogin.getUserEmail());
+			} else if(null == userLogin.getUserEmail() && null != userLogin.getTelephoneNumber()) {
+				userTelephoneNumber = userLogin.getTelephoneNumber();
+			} else if(null != userLogin.getUserEmail() && null != userLogin.getTelephoneNumber()) {
+				userTelephoneNumber = userService.getTelephoneNumberFromEmail(userLogin.getUserEmail());
+				if(userTelephoneNumber.equals(userLogin.getTelephoneNumber())) {
+					isTelephoneNumberMatch = true;
+				} else {
+					isTelephoneNumberMatch = false;
+					returnMessage = "email and telephone number do not match.";
+				}
+			} else {
+				returnMessage = "Please provide an email address or telephone number.";
+			}
+					
+			if(null != userLogin.getOtp() && isTelephoneNumberMatch == true) {
+				isValidOtp = otpService.isOtpValid(userTelephoneNumber, userLogin.getOtp());
+			} else if(null == userLogin.getOtp()){
+				returnMessage = "OTP was not found.";
+			}
+				
+		} else {
+			returnMessage = "provide a request body in the right format.";
+		}
+			
+		//Generate the JWT token.
+		if(isValidOtp == true) {
+			returnMessage = userService.createToken(userTelephoneNumber);
+			return ResponseEntity.ok(new SuccessToken(returnMessage));
+		} else if (returnMessage == "") {
+			returnMessage = "OTP is expired or it is wrong.";
+		}
+			
+		return ResponseEntity.badRequest().body(returnMessage);
+			
+	}
+		
+			
+	
 	// ********* User CRUD Operation **********
 	@DeleteMapping("/deleteuser/{telephonenumber}")
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
@@ -210,8 +257,6 @@ public class UserController {
 	public User whoami(HttpServletRequest req) {
 		return userService.whoami(req);
 	}
-	
-	
 	
 
 }
