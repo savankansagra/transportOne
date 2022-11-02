@@ -1,3 +1,8 @@
+## API Documentation and guide.
+[Google doc edit](https://docs.google.com/document/d/1ISPrHjIcTkI9s83NhhRnbxwjunx5wLSMWdA7oMw8wnc/edit?usp=sharing)
+
+[Google doc view](https://docs.google.com/document/d/e/2PACX-1vRZm2GZwp2PVe2epQMWnWyirxgFhjkWUdePaNghmFjyMm6NmJL9iBzupPhQoEDH3TYjXvILv-L5zdMb/pub)
+
 ## Login
 #### Register user.
 **Features**
