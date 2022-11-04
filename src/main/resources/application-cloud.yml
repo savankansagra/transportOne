@@ -1,0 +1,33 @@
+spring:
+    datasource:
+        password: postgres
+        url: "jdbc:postgresql:///transpost
+  ?host=/cloudsql/mineral-math-367413:asia-south2:tranpostone-postgresql"
+        username: postgres
+        password: root
+    jpa:
+        hibernate:
+            ddl-auto: update
+        properties:
+            hibernate:
+                dialect: org.hibernate.dialect.PostgreSQLDialect
+                jdbc:
+                    lob:
+                        non_contextual_creation: true
+        show-sql:   
+    mail:
+        host: smtp.gmail.com
+        password: nrwkjnmudplavouc
+        port: 587
+        properties:
+            mail:
+                smtp:
+                    auth: true
+                    starttls:
+                        enable: true
+        username: 015coders015@gmail.com
+        
+twilio: # Twilio credentials got by www.twilio.com #
+  account_sid: ACb47d1adbf507cbc2fc1c6fc424363a3d
+  auth_token: 7b830146fd0320779d9d32ed98ea8835
+  trial_number: 10
