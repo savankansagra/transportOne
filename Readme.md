@@ -3,6 +3,12 @@
 
 [Google doc view](https://docs.google.com/document/d/e/2PACX-1vRZm2GZwp2PVe2epQMWnWyirxgFhjkWUdePaNghmFjyMm6NmJL9iBzupPhQoEDH3TYjXvILv-L5zdMb/pub)
 
+[Figma desing url](https://www.figma.com/file/0I6yvtvgJ7h1476tWhZ8Rn/Untitled?node-id=0%3A1)
+figma crendentails
+kansagrasavan111@gmail.com
+sa123van
+
+
 ## Login
 #### Register user.
 **Features**
