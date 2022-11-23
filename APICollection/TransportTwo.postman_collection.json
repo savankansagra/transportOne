@@ -1,0 +1,323 @@
+{
+	"info": {
+		"_postman_id": "539c55fa-6650-41a5-a3d8-b7ee7b5ed035",
+		"name": "TransportTwo",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "EmailAddressLogin",
+			"item": [
+				{
+					"name": "SignUpwithEmailAddress",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"emailAddress\":\"kansagrasavan108@gmail.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/signin/useremail",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"signin",
+								"useremail"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SignUpwithEmailAddress Copy",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"emailAddress\":\"kansagrasavan108@gmail.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/signin/useremail",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"signin",
+								"useremail"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "AuthenticationWithemailAddress",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"userEmail\": \"kansagrasavan111@gmail.com\",\n    \"Otp\": 423958\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/authentication/useremail",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"authentication",
+								"useremail"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "TelephoneNumberLogin",
+			"item": [
+				{
+					"name": "SignUpwithTelephoneNumber",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"telephoneNumber\":\"+919408234854\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/signin/usertelephonenumber",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"signin",
+								"usertelephonenumber"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "AuthenticationWithTelephoneNumber",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"telephoneNumber\": \"+919408234854\",\n    \"Otp\": 140981\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/authentication/usertelephonenumber",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"authentication",
+								"usertelephonenumber"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "TruckDetails",
+			"item": [
+				{
+					"name": "postTruckDetails",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIrOTE5NDA4MjM0ODU0IiwiYXV0aCI6W3siYXV0aG9yaXR5IjoiUk9MRV9BRE1JTiJ9XSwiaWF0IjoxNjYzMjMzNjQzLCJleHAiOjE2NjMyMzcyNDN9.w6tzNjotUtEoqo4EtF6WrtW5tzwSpTnkQZpIkIw1OG0",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"truckType\": \"Tata Master Load.\",\n    \"truckLength\": \"19 feet\",\n    \"truckCompany\":\"Tata Motors\",\n    \"truckCapacity\":\"10 ton\",\n    \"vehicalNumber\":\"GJ01AA0000\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/driver/posttruckdetails",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"driver",
+								"posttruckdetails"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "signup",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"telephoneNumber\": \"+918156032234\",\n    \"userEmail\": \"gadhiyamohit208@gmail.com\",\n    \"userRoles\": [\n        \"ROLE_USER\"\n    ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{hosturl}}/api/signup",
+					"host": [
+						"{{hosturl}}"
+					],
+					"path": [
+						"api",
+						"signup"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "AuthenticationAllInone",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"telephoneNumber\": \"+918156032234\",\n    \"otp\": 469573\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{hosturl}}/api/authentication/",
+					"host": [
+						"{{hosturl}}"
+					],
+					"path": [
+						"api",
+						"authentication",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getMe",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIrOTE4MTU2MDMyMjM0IiwiYXV0aCI6W3siYXV0aG9yaXR5IjoiUk9MRV9VU0VSIn1dLCJpYXQiOjE2NjkyMDc1NzEsImV4cCI6MTY2OTIxMTE3MX0.TMv8ZliSr92ja2LV6B6Z5HDMZAt56jJN8AZnJjwRcmM",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIrOTE5MzE2MzcwMDcwIiwiYXV0aCI6W3siYXV0aG9yaXR5IjoiUk9MRV9VU0VSIn1dLCJpYXQiOjE2Njc4ODQxODAsImV4cCI6MTY2Nzg4Nzc4MH0.rq9EXNc1BEeJRPZguBfXw0AQNZ1fdIWRSu5OtVXEvIk",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "Auth",
+							"value": "",
+							"type": "default"
+						}
+					],
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{hosturl}}/api/me?",
+					"host": [
+						"{{hosturl}}"
+					],
+					"path": [
+						"api",
+						"me"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": null
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
