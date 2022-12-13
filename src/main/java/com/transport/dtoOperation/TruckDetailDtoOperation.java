@@ -1,5 +1,7 @@
 package com.transport.dtoOperation;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UserDetailsRepositoryReactiveAuthenticationManager;
 import org.springframework.stereotype.Component;
@@ -21,20 +23,14 @@ public class TruckDetailDtoOperation {
 	private TruckDetailsRepository truckDetailRepository;
 	
 	@Autowired
-	private UserRepository userRepository;
-	
-	@Autowired
-	TruckDtoConverter truckDtoConverter;
+	private TruckDtoConverter truckDtoConverter;
 	
 	@Autowired
 	private ReturnTruckDetailsRepository returnTruckDetailsRepository;
 	
 	
 	
-	public TruckDetails postTruckDetails(TruckDetailsDto truckDetailsDto, String userTelephoneNumber) {
-		// get the user Object of signIn.
-		User user = userRepository.findUserByTelephoneNumber(userTelephoneNumber);
-		
+	public TruckDetails postTruckDetails(TruckDetailsDto truckDetailsDto, User user) {
 		//create the persistence object
 		TruckDetails truckDetails = truckDtoConverter.convertDtoToPersistanceOb(truckDetailsDto, user);
 		//truckDetails
@@ -49,13 +45,10 @@ public class TruckDetailDtoOperation {
 	 * store entity in database. if already exists then update it.
 	 * 
 	 * @param newReturnTruckDetail
-	 * @param principalUserTelephone
+	 * @param user
 	 * @return
 	 */
-	public ReturnTruckDetails postReturnTruckDetails(NewReturnTruckDetail newReturnTruckDetail, String principalUserTelephone) {
-		// get the user details.
-		User user = userRepository.findUserByTelephoneNumber(principalUserTelephone);
-		
+	public ReturnTruckDetails postReturnTruckDetails(NewReturnTruckDetail newReturnTruckDetail, User user) {
 		// create the persistence object of request.
 		ReturnTruckDetails returnTruckDetails = truckDtoConverter.convertReturnTruckDetailsDtoTopersistent(newReturnTruckDetail, user);
 		
@@ -64,4 +57,21 @@ public class TruckDetailDtoOperation {
 		
 		return savedReturnTruckDetails;
 	}
+
+
+	/**
+	 * return the list of all return truck associated with user.
+	 * 
+	 * @param user
+	 * @return
+	 */
+	public List<ReturnTruckDetails> getAllReturnTruckDetails(User user) {
+		long userId = user.getId();
+		return returnTruckDetailsRepository.findAllReturnTruckByUserId(userId);
+	}
+	
+	
+	
+	
+	
 }

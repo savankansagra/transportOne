@@ -7,6 +7,7 @@ import java.util.HashMap;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import com.transport.entities.User;
@@ -160,6 +161,16 @@ public class UserService {
 		String userTelephoneNumber = jwtTokenProvider.getTelephoneNumberFromToken(token);
 		User user = userRepository.findUserByTelephoneNumber(userTelephoneNumber);
 		return user;
+		
+	}
+
+	
+	public User findUserByTelephoneNumber(Authentication authentication) {
+		String principalUserTelephoneNumber = authentication.getPrincipal().toString();
+		
+		// get the user Object of signIn.
+		User user = userRepository.findUserByTelephoneNumber(principalUserTelephoneNumber);
+		return user;		
 		
 	}
 	

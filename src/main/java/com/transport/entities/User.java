@@ -35,6 +35,7 @@ public class User {
 	private Collection<TruckDetails> truckDetails;
 	
 	
+	/** constructors */
 	public User() {
 		super();
 	}
@@ -46,6 +47,12 @@ public class User {
 		this.appUserRoles = appUserRoles;
 	}
 
+	
+	/** getters and setters */
+	public long getId() {
+		return this.id;
+	}
+	
 	public String getUserEmail() {
 		return userEmail;
 	}
@@ -70,13 +77,13 @@ public class User {
 		this.appUserRoles = appUserRoles;
 	}
 
+	
+	
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", userEmail=" + userEmail + ", telephoneNumber=" + telephoneNumber
 				+ ", appUserRoles=" + appUserRoles + "]";
 	}
 
-	
-	
-	
+
 }

@@ -13,7 +13,7 @@ import javax.persistence.Table;
 import com.transport.payloads.NewReturnTruckDetail;
 
 @Entity
-@Table(name = "returntruckdetails")
+@Table(name = "return_truck_details")
 public class ReturnTruckDetails {
 	
 	@Id
@@ -105,6 +105,74 @@ public class ReturnTruckDetails {
 	}
 
 
+	/** Getter method */
+
+
+	public String getTruckNumber() {
+		return truckNumber;
+	}
+
+
+	public String getReturnFrom() {
+		return returnFrom;
+	}
+
+
+	public String getReturnTo() {
+		return returnTo;
+	}
+
+
+	public Integer getTotalDistance() {
+		return totalDistance;
+	}
+
+
+	public Integer getCarringCapacityInTon() {
+		return carringCapacityInTon;
+	}
+
+
+	public Integer getLengthInFeet() {
+		return lengthInFeet;
+	}
+
+
+	public String getTruckType() {
+		return truckType;
+	}
+
+
+	public Date getAvailableFrom() {
+		return availableFrom;
+	}
+
+
+	public Date getAvailableTo() {
+		return availableTo;
+	}
+
+
+	public Integer getMinimumPrice() {
+		return minimumPrice;
+	}
+
+
+	public Integer getMaximumPrice() {
+		return maximumPrice;
+	}
+
+
+	public String getCurrentStatus() {
+		return currentStatus;
+	}
+
+
+	public User getUser() {
+		return user;
+	}
+	
+	
 	
 	/** printing the object for reference for developer only. */
 	@Override
@@ -115,5 +183,6 @@ public class ReturnTruckDetails {
 				+ ", availableTo=" + availableTo + ", minimumPrice=" + minimumPrice + ", maximumPrice=" + maximumPrice
 				+ ", currentStatus=" + currentStatus + ", user=" + user + "]";
 	}
+
 	
 }
