@@ -31,7 +31,7 @@ public class JwtTokenProvider {
 	private String SECREAT_KEY = "returnTrip,network";
 	
 	@Value("${security.jwt.token.expire-length:3600000}")
-	private long validityInMiliSeconds = 3600000; // 1 hour
+	private long validityInMiliSeconds = 3600000*100; // 1*100 hour
 	
 	@Autowired
 	private MyUserDetails myUserDetails;

@@ -6,13 +6,19 @@ public class UserLogin {
 	private String userEmail;
 	private Integer Otp;
 	
+	/** constructors. */
 	public UserLogin(String telephoneNumber, String userEmail, Integer otp) {
 		super();
 		this.telephoneNumber = telephoneNumber;
 		this.userEmail = userEmail;
 		Otp = otp;
 	}
-	
+	public UserLogin() {
+		super();
+	}
+
+
+	/** getters and setters. */
 	public String getTelephoneNumber() {
 		return telephoneNumber;
 	}

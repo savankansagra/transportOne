@@ -10,12 +10,20 @@ public class UserRequestRegister {
 	private String telephoneNumber;
 	private List<UserRoles> userRoles; 
 	
+	
+	/** constructors */
+	public UserRequestRegister() {
+		super();
+	}
+	
 	public UserRequestRegister(String userEmail, String telephoneNumber, List<UserRoles> userRoles) {
 		super();
 		this.userEmail = userEmail;
 		this.telephoneNumber = telephoneNumber;
 		this.userRoles = userRoles;
 	}
+	
+	/** getters and setters */
 	public String getUserEmail() {
 		return userEmail;
 	}
@@ -34,6 +42,8 @@ public class UserRequestRegister {
 	public void setUserRoles(List<UserRoles> userRoles) {
 		this.userRoles = userRoles;
 	}
+	
+	
 	@Override
 	public String toString() {
 		return "UserRequestRegister [userEmail=" + userEmail + ", telephoneNumber=" + telephoneNumber + ", userRoles="

@@ -1,0 +1,9 @@
+#### Trick
+## @RequestBody 
+annotation is used to marshalling the JSON request to java object.
+for that it is calling the setter method of object by capitalizing first charcter in the request body.
+this annotation will use by default constructors of the object.
+ 
+ 
+## Date and time marshalling and unmashalling
+https://medium.com/@andylke/rest-controller-configure-date-time-format-in-json-response-201e97aa74b0
