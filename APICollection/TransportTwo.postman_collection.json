@@ -171,6 +171,16 @@
 				{
 					"name": "postTruckDetails",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIrOTE5OTk5OTk5OTk5IiwiYXV0aCI6W3siYXV0aG9yaXR5IjoiUk9MRV9VU0VSIn1dLCJpYXQiOjE2NzA5Mjc0MjMsImV4cCI6MTY3MDkzMTAyM30.mMKgMDQbqiIrP70hi9fPggiFz_xJHwAm22EV8d_xPYc",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [
 							{
@@ -207,13 +217,124 @@
 			]
 		},
 		{
+			"name": "Post New Truck",
+			"item": [
+				{
+					"name": "PostTruckData",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIrOTE5OTk5OTk5OTk5IiwiYXV0aCI6W3siYXV0aG9yaXR5IjoiUk9MRV9VU0VSIn1dLCJpYXQiOjE2NzA5MzY2NTgsImV4cCI6MTY3MDk0MDI1OH0.lslziIBaCGyanImJbVwwPb8UI2Y3pfWjU_MQ9JLDO6E",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"returnFrom\": \"ahmedabad\",\n    \"returnTo\": \"surat\",\n    \"totalDistance\": 250,\n    \"truckNumber\": \"GJ00AA0003\",\n    \"carringCapacityInTon\": 10,\n    \"lengthInFeet\": 21,\n    \"truckType\": \"tata heavy load 350 HP open truck\",\n    \"availableFrom\": \"10-12-2022 09:09:09 AM\",\n    \"availableTo\": \"10-12-2022 11:11:11 PM\",\n    \"minimumPrice\": 7000,\n    \"maximumPrice\": 10000,\n    \"currentStatus\": \"unloading\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/driver/truck",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"driver",
+								"truck"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIrOTE5Njg3ODc5NjY2IiwiYXV0aCI6W3siYXV0aG9yaXR5IjoiUk9MRV9VU0VSIn1dLCJpYXQiOjE2Njk4NzE0OTIsImV4cCI6MTY2OTg3NTA5Mn0.923zWgRh_0FIyFp0b4-uOX9OqxLDf4iErKV2MBBhvMg",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Get all truck Associated with user",
+			"item": [
+				{
+					"name": "get all trucks",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIrOTE5OTk5OTk5OTk5IiwiYXV0aCI6W3siYXV0aG9yaXR5IjoiUk9MRV9VU0VSIn1dLCJpYXQiOjE2NzA5MzY2NTgsImV4cCI6MTY3MDk0MDI1OH0.lslziIBaCGyanImJbVwwPb8UI2Y3pfWjU_MQ9JLDO6E",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/driver/truck",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"driver",
+								"truck"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
 			"name": "signup",
 			"request": {
 				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"telephoneNumber\": \"+918156032234\",\n    \"userEmail\": \"gadhiyamohit208@gmail.com\",\n    \"userRoles\": [\n        \"ROLE_USER\"\n    ]\n}",
+					"raw": "{\n    \"telephoneNumber\": \"+919999999999\",\n    \"userEmail\": \"kansagrasavan109@gmail.com\",\n    \"userRoles\": [\n        \"ROLE_USER\"\n    ]\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -240,7 +361,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"telephoneNumber\": \"+918156032234\",\n    \"otp\": 469573\n}",
+					"raw": "{\n    \"userEmail\": \"kansagrasavan109@gmail.com\",\n    \"otp\": 647792\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -272,7 +393,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIrOTE4MTU2MDMyMjM0IiwiYXV0aCI6W3siYXV0aG9yaXR5IjoiUk9MRV9VU0VSIn1dLCJpYXQiOjE2NjkyMDc1NzEsImV4cCI6MTY2OTIxMTE3MX0.TMv8ZliSr92ja2LV6B6Z5HDMZAt56jJN8AZnJjwRcmM",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIrOTE5OTk5OTk5OTk5IiwiYXV0aCI6W3siYXV0aG9yaXR5IjoiUk9MRV9VU0VSIn1dLCJpYXQiOjE2NzA5MjA1NDEsImV4cCI6MTY3MDkyNDE0MX0.U1CVda06SkbLUrkRQ5wG9JwZSVkIfd_32ghF-aw0xsk",
 							"type": "string"
 						}
 					]
@@ -291,7 +412,8 @@
 						{
 							"key": "Auth",
 							"value": "",
-							"type": "default"
+							"type": "default",
+							"disabled": true
 						}
 					],
 					"options": {
@@ -301,19 +423,13 @@
 					}
 				},
 				"url": {
-					"raw": "{{hosturl}}/api/me?",
+					"raw": "{{hosturl}}/api/me",
 					"host": [
 						"{{hosturl}}"
 					],
 					"path": [
 						"api",
 						"me"
-					],
-					"query": [
-						{
-							"key": "",
-							"value": null
-						}
 					]
 				}
 			},
