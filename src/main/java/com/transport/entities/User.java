@@ -2,6 +2,7 @@ package com.transport.entities;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.UUID;
 
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
@@ -19,17 +20,17 @@ public class User {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	Long id;
+	private long id;
 	
 	@Column(name = "useremail")
-	String userEmail;
+	private String userEmail;
 	
 	@Column(name = "telephonenumber")
-	String telephoneNumber;
+	private String telephoneNumber;
 
 	@Column
 	@ElementCollection(fetch = FetchType.EAGER)
-	List<UserRoles> appUserRoles;
+	private List<UserRoles> appUserRoles;
 	
 	@OneToMany(mappedBy = "user")
 	private Collection<TruckDetails> truckDetails;
@@ -50,7 +51,11 @@ public class User {
 	
 	/** getters and setters */
 	public long getId() {
-		return this.id;
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
 	}
 	
 	public String getUserEmail() {
