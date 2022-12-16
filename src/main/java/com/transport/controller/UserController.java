@@ -74,6 +74,9 @@ public class UserController {
 		// TODO Implement the validation of mobile number and email address.
 		// 		Then send the OTP.
 		
+		// logging
+		logger.info("class=UserController | method=register | request=/signup | userRequest: "+ userRequestRegister.toString());
+		
 		//Save to database
 		boolean isSaved = userService.save(userRequestRegister);
 		
@@ -99,12 +102,18 @@ public class UserController {
 	// Using email Address to Login
 	@PostMapping("/signin/useremail")
 	public ResponseEntity<StandardResponse> loginWithEmail(@RequestBody LoginEmail loginEmail){
+		// logging
+		logger.info("class=UserController | method=loginWithEmail | request=/signin/useremail | loginEmail: "+ loginEmail.toString());
+
 		String message = userService.validateAndSendOtpToEmail(loginEmail);
 		return ResponseEntity.ok(new StandardResponse(message));
 	}
 	
 	@PostMapping("/signin/usertelephonenumber")
 	public ResponseEntity<StandardResponse> loginWithTelephoneNumber(@RequestBody LoginTelephoneNumber loginTelephoneNumber ){
+		// logging
+		logger.info("class=UserController | method=loginWithTelephoneNumber | request=/signin/usertelephonenumber | loginTelephoneNumber: "+ loginTelephoneNumber.toString());
+		
 		String message = userService.validateAndSendOtpToTelephoneNumber(loginTelephoneNumber);
 		return ResponseEntity.ok(new StandardResponse(message));
 	}
@@ -114,6 +123,9 @@ public class UserController {
 	// SignIn verification with Email 
 	@PostMapping("/authentication/useremail")
 	public ResponseEntity AuthenticateWithEmail(@RequestBody UserLoginEmail userLoginEmail){
+		// logging
+		logger.info("class=UserController | method=AuthenticateWithEmail | request=/authentication/useremail | userLoginEmail: "+ userLoginEmail.toString());
+		
 		boolean isValidOtp = false;
 		String returnMessage = "";
 		
@@ -148,6 +160,9 @@ public class UserController {
 	// SignIn with telephone number
 	@PostMapping("/authentication/usertelephonenumber")
 	public ResponseEntity AuthenticateWithTelephoneNumber(@RequestBody UserLoginTelephoneNumber loginTelephoneNumber){
+		// logging
+		logger.info("class=UserController | method=AuthenticateWithTelephoneNumber | request=/authentication/usertelephonenumber | loginTelephoneNumber: "+ loginTelephoneNumber.toString());
+		
 		String userTelephoneNumber = "";
 		boolean isValidOtp = false;
 		String returnMessage = "";
@@ -184,6 +199,9 @@ public class UserController {
 	// SignIn verification with Email 
 	@PostMapping("/authentication")
 	public ResponseEntity AuthenticateUser(@RequestBody UserLogin userLogin){
+		// logging
+		logger.info("class=UserController | method=AuthenticateUser | request=/authentication | userLogin: "+ userLogin.toString());		
+		
 		boolean isValidOtp = false;
 		boolean isTelephoneNumberMatch = true;
 		String returnMessage = "";
@@ -235,6 +253,9 @@ public class UserController {
 	@DeleteMapping("/deleteuser/{telephonenumber}")
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public String delete(@PathVariable String telephoneNumber) {
+		// logging
+		logger.info("class=UserController | method=delete | request=/deleteuser/{telephonenumber | telephoneNumber: "+ telephoneNumber.toString());		
+		
 		userService.delete(telephoneNumber);
 		return "deleted Sucessfull :"+telephoneNumber;
 	}
@@ -247,6 +268,9 @@ public class UserController {
 	@GetMapping("/refresh")
 	@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_CLIENT')")
 	public String refresh(HttpServletRequest req) {
+		// logging
+		logger.info("class=UserController | method=refresh | request=/refresh | req: "+ req.toString());		
+				
 		return userService.refresh(req.getRemoteUser());
 	}
 	
@@ -255,6 +279,9 @@ public class UserController {
 	@GetMapping("/me")
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public User whoami(HttpServletRequest req) {
+		// logging
+		logger.info("class=UserController | method=whoami | request=/me | req: "+ req.toString());				
+		
 		return userService.whoami(req);
 	}
 	
