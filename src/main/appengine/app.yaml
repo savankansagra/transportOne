@@ -1,4 +1,16 @@
-runtime: java11
-instance_class: F2
-env_variables:
-    JAVA_USER_OPTS: '-Dspring.profiles.active=cloud'
+runtime: java
+env: flex
+
+profiles:
+  staging:
+    runtime: java
+    env: flex
+    env_variables:
+      MY_VAR: staging
+      SPRING_PROFILES_ACTIVE: cloud
+  production:
+    runtime: java
+    env: flex
+    env_variables:
+      MY_VAR: production
+      SPRING_PROFILES_ACTIVE: production

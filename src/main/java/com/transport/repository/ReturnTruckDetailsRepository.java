@@ -7,7 +7,6 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 
 import com.transport.entities.ReturnTruckDetails;
-import com.transport.entities.TruckDetails;
 
 public interface ReturnTruckDetailsRepository extends CrudRepository<ReturnTruckDetails, String> {
 	

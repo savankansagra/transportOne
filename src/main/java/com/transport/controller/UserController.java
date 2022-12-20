@@ -1,8 +1,6 @@
 package com.transport.controller;
 
 
-import java.util.HashMap;
-
 import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
@@ -16,7 +14,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.transport.entities.User;
@@ -28,7 +25,6 @@ import com.transport.payloads.UserLogin;
 import com.transport.payloads.UserLoginEmail;
 import com.transport.payloads.UserLoginTelephoneNumber;
 import com.transport.payloads.UserRequestRegister;
-import com.transport.security.JwtTokenProvider;
 import com.transport.services.OtpService;
 import com.transport.services.UserService;
 
@@ -70,12 +66,11 @@ public class UserController {
 	// SignUp
 	@PostMapping("/signup")
 	public ResponseEntity<StandardResponse> register(@RequestBody UserRequestRegister userRequestRegister){
+		// logging
+		logger.info("method=register | request=/signup | userRequest: "+ userRequestRegister);
 		
 		// TODO Implement the validation of mobile number and email address.
 		// 		Then send the OTP.
-		
-		// logging
-		logger.info("class=UserController | method=register | request=/signup | userRequest: "+ userRequestRegister.toString());
 		
 		//Save to database
 		boolean isSaved = userService.save(userRequestRegister);
@@ -103,7 +98,7 @@ public class UserController {
 	@PostMapping("/signin/useremail")
 	public ResponseEntity<StandardResponse> loginWithEmail(@RequestBody LoginEmail loginEmail){
 		// logging
-		logger.info("class=UserController | method=loginWithEmail | request=/signin/useremail | loginEmail: "+ loginEmail.toString());
+		logger.info("method=loginWithEmail | request=/signin/useremail | loginEmail "+loginEmail);
 
 		String message = userService.validateAndSendOtpToEmail(loginEmail);
 		return ResponseEntity.ok(new StandardResponse(message));
@@ -112,7 +107,7 @@ public class UserController {
 	@PostMapping("/signin/usertelephonenumber")
 	public ResponseEntity<StandardResponse> loginWithTelephoneNumber(@RequestBody LoginTelephoneNumber loginTelephoneNumber ){
 		// logging
-		logger.info("class=UserController | method=loginWithTelephoneNumber | request=/signin/usertelephonenumber | loginTelephoneNumber: "+ loginTelephoneNumber.toString());
+		logger.info("method=loginWithTelephoneNumber | request=/signin/usertelephonenumber | loginTelephoneNumber: "+ loginTelephoneNumber.toString());
 		
 		String message = userService.validateAndSendOtpToTelephoneNumber(loginTelephoneNumber);
 		return ResponseEntity.ok(new StandardResponse(message));
@@ -124,7 +119,7 @@ public class UserController {
 	@PostMapping("/authentication/useremail")
 	public ResponseEntity AuthenticateWithEmail(@RequestBody UserLoginEmail userLoginEmail){
 		// logging
-		logger.info("class=UserController | method=AuthenticateWithEmail | request=/authentication/useremail | userLoginEmail: "+ userLoginEmail.toString());
+		logger.info("method=AuthenticateWithEmail | request=/authentication/useremail | userLoginEmail "+userLoginEmail);
 		
 		boolean isValidOtp = false;
 		String returnMessage = "";
@@ -161,7 +156,7 @@ public class UserController {
 	@PostMapping("/authentication/usertelephonenumber")
 	public ResponseEntity AuthenticateWithTelephoneNumber(@RequestBody UserLoginTelephoneNumber loginTelephoneNumber){
 		// logging
-		logger.info("class=UserController | method=AuthenticateWithTelephoneNumber | request=/authentication/usertelephonenumber | loginTelephoneNumber: "+ loginTelephoneNumber.toString());
+		logger.info("method=AuthenticateWithTelephoneNumber | request=/authentication/usertelephonenumber | loginTelephoneNumber: "+ loginTelephoneNumber);
 		
 		String userTelephoneNumber = "";
 		boolean isValidOtp = false;
@@ -200,7 +195,7 @@ public class UserController {
 	@PostMapping("/authentication")
 	public ResponseEntity AuthenticateUser(@RequestBody UserLogin userLogin){
 		// logging
-		logger.info("class=UserController | method=AuthenticateUser | request=/authentication | userLogin: "+ userLogin.toString());		
+		logger.info("method=AuthenticateUser | request=/authentication | userLogin "+userLogin);		
 		
 		boolean isValidOtp = false;
 		boolean isTelephoneNumberMatch = true;
@@ -254,7 +249,7 @@ public class UserController {
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public String delete(@PathVariable String telephoneNumber) {
 		// logging
-		logger.info("class=UserController | method=delete | request=/deleteuser/{telephonenumber | telephoneNumber: "+ telephoneNumber.toString());		
+		logger.info("method=delete | request=/deleteuser/{telephonenumber | telephoneNumber: "+ telephoneNumber);		
 		
 		userService.delete(telephoneNumber);
 		return "deleted Sucessfull :"+telephoneNumber;
@@ -269,7 +264,7 @@ public class UserController {
 	@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_CLIENT')")
 	public String refresh(HttpServletRequest req) {
 		// logging
-		logger.info("class=UserController | method=refresh | request=/refresh | req: "+ req.toString());		
+		logger.info("method=refresh | request=/refresh | req: "+ req);		
 				
 		return userService.refresh(req.getRemoteUser());
 	}
@@ -280,7 +275,7 @@ public class UserController {
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public User whoami(HttpServletRequest req) {
 		// logging
-		logger.info("class=UserController | method=whoami | request=/me | req: "+ req.toString());				
+		logger.info("method=whoami | request=/me | req: "+ req);				
 		
 		return userService.whoami(req);
 	}

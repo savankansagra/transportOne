@@ -1,6 +1,8 @@
 spring:
     datasource:
-        url: "jdbc:postgresql:///transport?cloudSqlInstance=mineral-math-367413:asia-south2:tranpostone-postgresql&socketFactory=com.google.cloud.sql.postgres.SocketFactory&user=postgres&password=root"
+        username: postgres
+        password: root
+        url: "jdbc:postgresql:///transport?cloudSqlInstance=mineral-math-367413:asia-south1:transporttwo&socketFactory=com.google.cloud.sql.postgres.SocketFactory"
     jpa:
         hibernate:
             ddl-auto: update

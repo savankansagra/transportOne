@@ -5,12 +5,15 @@ import java.util.concurrent.TimeUnit;
 
 import javax.mail.MessagingException;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
+import com.transport.controller.DriverController;
 import com.transport.payloads.UserLoginEmail;
 import com.transport.payloads.UserRequestRegister;
 
@@ -19,7 +22,8 @@ public class OtpService {
 
 	private static final Integer EXPIRE_MINS = 10;
 	private LoadingCache<String, Integer> otpCache;
-
+	Logger logger = LoggerFactory.getLogger(OtpService.class);
+	
 	@Autowired
 	private EmailService emailService; 
 	
@@ -43,7 +47,7 @@ public class OtpService {
 		Random random = new Random();
 		int otp = 100000 + random.nextInt(900000);
 		otpCache.put(key, otp);
-		System.out.println("OTP is :"+otp);
+		logger.info("method=generateOtp | generated otp is:" + otp );
 		return otp;
 	}
 	

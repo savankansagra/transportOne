@@ -32,9 +32,6 @@ public class User {
 	@ElementCollection(fetch = FetchType.EAGER)
 	private List<UserRoles> appUserRoles;
 	
-	@OneToMany(mappedBy = "user")
-	private Collection<TruckDetails> truckDetails;
-	
 	
 	/** constructors */
 	public User() {

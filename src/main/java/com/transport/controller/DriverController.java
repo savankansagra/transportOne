@@ -15,9 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.transport.entities.ReturnTruckDetails;
-import com.transport.entities.TruckDetails;
 import com.transport.payloads.NewReturnTruckDetail;
-import com.transport.payloads.TruckDetailsDto;
 import com.transport.services.DriverService;
 
 @RestController
@@ -29,15 +27,6 @@ public class DriverController {
 	@Autowired
 	DriverService driverService;
 	
-	@PostMapping(path = "/posttruckdetails")
-	public ResponseEntity<TruckDetails> postTruckDetails(@RequestBody TruckDetailsDto truckDetailsDto, Authentication authentication){
-
-		//System.out.println(authentication.getPrincipal());
-		
-		TruckDetails postedTruckDetails = driverService.postTruckDetails(truckDetailsDto, authentication);
-		return new ResponseEntity<TruckDetails>(postedTruckDetails, HttpStatus.CREATED);
-	}
-	
 	
 	/**
 	 * Posting new return truck details. 
@@ -45,6 +34,9 @@ public class DriverController {
 	 */
 	@PostMapping(path = "/truck")
 	public ResponseEntity<ReturnTruckDetails> postNewTruckDetails(@RequestBody NewReturnTruckDetail newReturnTruckDetail, Authentication authentication){
+		// logging
+		logger.info("method=postNewTruckDetails | request=/truck | newReturnTruckDetail: "+ newReturnTruckDetail);				
+		
 		if(newReturnTruckDetail == null) {
 			return ResponseEntity.badRequest().build();
 		}
@@ -63,8 +55,10 @@ public class DriverController {
 	 */
 	@GetMapping(path = "/truck")
 	public ResponseEntity<List<ReturnTruckDetails>> getAllReturnTruckDetails(Authentication authentication){
-		 List<ReturnTruckDetails> allReturnTruckDetails = driverService.getAllReturnTruckDetails(authentication);
-		 return new ResponseEntity<>(allReturnTruckDetails, HttpStatus.OK);
+		logger.info("method=getAllReturnTruckDetails | request=/truck | authentication: "+ authentication);	 
+		
+		List<ReturnTruckDetails> allReturnTruckDetails = driverService.getAllReturnTruckDetails(authentication);
+		return new ResponseEntity<>(allReturnTruckDetails, HttpStatus.OK);
 	}
 	
 	
