@@ -1,6 +1,9 @@
 package com.transport.services;
 
 import java.util.Random;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 import javax.mail.MessagingException;
@@ -87,15 +90,27 @@ public class OtpService {
 		//generate otp
 		int otp = this.generateOtp(userRequestRegister.getTelephoneNumber());
 		
-		//send to email
-		String to = userRequestRegister.getUserEmail();
-		String subject = "Verification OTP code";
-		String message = "Verification OTP code is "+otp;
-		try {
-			emailService.sendOtpMessage(to, subject, message);
-		} catch (Exception e) {
-			// TODO: handle exception
-		}
+		// make async call to the sending email function.
+		ExecutorService executor = Executors.newSingleThreadExecutor();
+		Callable<Void> task = new Callable<Void>() {
+
+			@Override
+			public Void call() throws Exception {
+				//send to email
+				String to = userRequestRegister.getUserEmail();
+				String subject = "Verification OTP code";
+				String message = "Verification OTP code is "+otp;
+				try {
+					emailService.sendOtpMessage(to, subject, message);
+				} catch (Exception e) {
+					// TODO: handle exception
+				}
+				return null;
+			}
+			
+		};
+		executor.submit(task);
+		
 		
 		// TODO : check authentication of sending OTP to mobile.
 		/*
